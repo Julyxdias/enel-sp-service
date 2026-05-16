@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: enel-sp-service
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+
+    # Render free tier — troque para "standard" na VPS migration
+    plan: starter
+
+    # Porta exposta no Dockerfile
+    port: 3000
+
+    # Health check — Render marca o serviço como UP só depois disto responder
+    healthCheckPath: /health
+
+    envVars:
+      - key: PORT
+        value: "3000"
+
+      # Gere com: node scripts/secrets-cli.js genkey
+      # Cole o valor no dashboard do Render em Environment → Secret Files
+      - key: SECRETS_MASTER_KEY
+        sync: false   # nunca commitar — preencher manualmente no dashboard
+
+      # Opcional: Bearer token para autenticar chamadas do backend Python
+      # - key: API_BEARER_TOKEN
+      #   sync: false

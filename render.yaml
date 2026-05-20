@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: enel-service
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: starter                  # 512MB RAM mínimo para o Chromium
+    region: oregon                 # troque para frankfurt se quiser latência menor
+    healthCheckPath: /health
+    envVars:
+      - key: ENEL_API_KEY
+        generateValue: true        # Render gera um Bearer token aleatório
+      - key: PYTHONUNBUFFERED
+        value: "1"

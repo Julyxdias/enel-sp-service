@@ -122,13 +122,13 @@ async function extractOcr(pdfBuffer) {
     const get = p => { const m = text.match(p); return m ? m[1].trim() : null; };
     const getF = p => { const v = get(p); return v ? parseFloat(v.replace('.','').replace(',','.')) : null; };
     return {
-      cliente: get(/Cliente[:\s]+(.+)/i), distribuidora: get(/Distribuidora[:\s]+(.+)/i) ?? 'Enel Distribuição São Paulo',
+      cliente: get(/Cliente[:\s]+(.+)/i), distribuidora: get(/Distribuidora[:\s]+(.+)/i) ?? 'Enel Distribuicao Sao Paulo',
       classe: get(/Classe[:\s]+(.+)/i), subclasse: get(/Subclasse[:\s]+(.+)/i),
       grupo: get(/Grupo[:\s]+([A-Z]\d?)/i), subgrupo: get(/Subgrupo[:\s]+([A-Z]\d+)/i),
-      ref_mes: get(/Referência[:\s]+(\d{2})\/\d{4}/i), ref_ano: get(/Referência[:\s]+\d{2}\/(\d{4})/i),
-      emissao_data: get(/(?:Emissão)[:\s]+([\d\/]+)/i), vencimento: get(/Vencimento[:\s]+([\d\/]+)/i),
+      ref_mes: get(/Referencia[:\s]+(\d{2})\/\d{4}/i), ref_ano: get(/Referencia[:\s]+\d{2}\/(\d{4})/i),
+      emissao_data: get(/Emissao[:\s]+([\d\/]+)/i), vencimento: get(/Vencimento[:\s]+([\d\/]+)/i),
       leitura_anterior_data: get(/Leitura Anterior[:\s]+([\d\/]+)/i), leitura_data: get(/Leitura Atual[:\s]+([\d\/]+)/i),
-      leitura_proxima_data: get(/Próxima Leitura[:\s]+([\d\/]+)/i),
+      leitura_proxima_data: get(/Proxima Leitura[:\s]+([\d\/]+)/i),
       energia: getF(/Consumo[:\s]+([\d.,]+)\s*kWh/i), valor: getF(/Total a Pagar[:\s]+R?\$?\s*([\d.,]+)/i),
       preco_te: getF(/Tarifa TE[:\s]+R?\$?\s*([\d.,]+)/i), preco_tusd: getF(/Tarifa TUSD[:\s]+R?\$?\s*([\d.,]+)/i),
       normalizado_valor: getF(/Total a Pagar[:\s]+R?\$?\s*([\d.,]+)/i),
@@ -137,4 +137,4 @@ async function extractOcr(pdfBuffer) {
   } catch { return null; }
 }
 
-app.listen(PORT, () => console.log(`✓ Enel SP Service rodando na porta ${PORT}`));
+app.listen(PORT, () => console.log(`Enel SP Service rodando na porta ${PORT}`));

@@ -69,10 +69,10 @@ async function processarConsulta(jobId, { instalacao, login_email, login_senha }
     });
     const context = await browser.newContext({ userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36' });
     const page = await context.newPage();
-    await page.goto('https://portalhome.eneldistribuicaosp.com.br/#/login', { waitUntil: 'networkidle', timeout: 30000 });
-    await page.fill('input[type="email"], input[name="email"]', login_email);
-    await page.fill('input[type="password"], input[name="senha"]', login_senha);
-    await page.click('button[type="submit"], button.btn-login');
+    await page.goto('https://portalhome.eneldistribuicaosp.com.br/#/login', { waitUntil: 'domcontentloaded', timeout: 30000 });
+    await page.fill('input[placeholder="Digite seu email"]', login_email);
+    await page.fill('input[placeholder="Digite sua senha"]', login_senha);
+    await page.click('button:has-text("Acessar")');
     await page.waitForNavigation({ timeout: 20000 }).catch(() => {});
     const loginError = await page.$('.error-login, .alert-danger, [class*="erro"]');
     if (loginError) {
@@ -139,3 +139,4 @@ async function extractOcr(pdfBuffer) {
 }
 
 app.listen(PORT, () => console.log(`Enel SP Service rodando na porta ${PORT}`));
+

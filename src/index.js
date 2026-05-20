@@ -22,7 +22,8 @@ setInterval(() => {
   }
 }, 15 * 60 * 1000);
 
-app.get('/health', (_req, res) => res.json({ status: 'ok' }));
+app.get('/health', (_req, res) => res.json({ status: 'ok', version: '4' }));
+app.get('/debug', (_req, res) => res.json({ routes: app._router.stack.filter(r => r.route).map(r => ({ path: r.route.path, method: Object.keys(r.route.methods)[0] })) }));
 
 app.post('/api/enel-sp/contas', async (req, res) => {
   const { instalacao, login_email, login_senha, salvar_credencial } = req.body;
@@ -122,7 +123,7 @@ async function extractOcr(pdfBuffer) {
     const get = p => { const m = text.match(p); return m ? m[1].trim() : null; };
     const getF = p => { const v = get(p); return v ? parseFloat(v.replace('.','').replace(',','.')) : null; };
     return {
-      cliente: get(/Cliente[:\s]+(.+)/i), distribuidora: get(/Distribuidora[:\s]+(.+)/i) ?? 'Enel Distribuicao Sao Paulo',
+      cliente: get(/Cliente[:\s]+(.+)/i), distribuidora: get(/Distribuidora[:\s]+(.+)/i) ?? 'Enel',
       classe: get(/Classe[:\s]+(.+)/i), subclasse: get(/Subclasse[:\s]+(.+)/i),
       grupo: get(/Grupo[:\s]+([A-Z]\d?)/i), subgrupo: get(/Subgrupo[:\s]+([A-Z]\d+)/i),
       ref_mes: get(/Referencia[:\s]+(\d{2})\/\d{4}/i), ref_ano: get(/Referencia[:\s]+\d{2}\/(\d{4})/i),

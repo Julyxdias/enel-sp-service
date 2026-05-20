@@ -21,7 +21,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN playwright install chromium
 RUN playwright install-deps chromium
 
-COPY main.py .
+COPY main.py ocr_parser.py ./
 
 EXPOSE 8000
 
